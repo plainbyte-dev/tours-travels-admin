@@ -33,8 +33,16 @@ app.use((_req: Request, _res: Response, next: NextFunction) => {
 
 app.use(errorHandler);
 
-connectDB(MONGODB_URI).then(() => {
-  app.listen(PORT, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+if (process.env.VERCEL) {
+  // Serverless: the platform invokes the exported app per-request, there is no
+  // long-running process to block startup on, so just kick the connection off.
+  void connectDB(MONGODB_URI);
+} else {
+  connectDB(MONGODB_URI).then(() => {
+    app.listen(PORT, () => {
+      console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+    });
   });
-});
+}
+
+export default app;
