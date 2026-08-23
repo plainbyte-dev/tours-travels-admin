@@ -11,7 +11,7 @@ const allMeals = { breakfast: true, lunch: true, dinner: true };
 const pokharaPackage: PackageInput = {
   category: 'nepal-tours',
   title: 'Pokhara Lakeside & Sarangkot Sunrise',
-  destination: 'Pokhara',
+  destinations: ['Pokhara'],
   duration: '5-7',
   bestTimeToVisit: [
     { month: 'October', rating: 'best' },
@@ -91,7 +91,7 @@ const pokharaPackage: PackageInput = {
 const chitwanPackage: PackageInput = {
   category: 'nepal-tours',
   title: 'Chitwan Jungle Safari Escape',
-  destination: 'Chitwan',
+  destinations: ['Chitwan'],
   duration: '3-4',
   bestTimeToVisit: [
     { month: 'October', rating: 'best' },
@@ -139,7 +139,7 @@ const chitwanPackage: PackageInput = {
 const kathmanduLumbiniPackage: PackageInput = {
   category: 'nepal-tours',
   title: 'Kathmandu Heritage & Lumbini Pilgrimage',
-  destination: 'Kathmandu',
+  destinations: ['Kathmandu', 'Lumbini'],
   duration: '8-10',
   bestTimeToVisit: [
     { month: 'September', rating: 'best' },

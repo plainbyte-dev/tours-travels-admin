@@ -54,7 +54,7 @@ const packageSchema = new Schema(
   {
     category: { type: String, enum: CATEGORY_VALUES, default: 'nepal-tours' },
     title: { type: String, required: true, minlength: 3, maxlength: 120 },
-    destination: { type: String, enum: DESTINATION_VALUES, required: true },
+    destinations: { type: [String], enum: DESTINATION_VALUES, default: [] },
     duration: { type: String, enum: DURATION_VALUES, required: true },
     bestTimeToVisit: { type: [bestTimeToVisitEntrySchema], default: [] },
     description: { type: String, required: true, minlength: 50 },

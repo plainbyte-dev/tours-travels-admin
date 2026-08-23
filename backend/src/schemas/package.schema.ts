@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { DURATION_DAY_RANGE, DURATION_VALUES } from '../constants/duration';
 
-export const CATEGORY_VALUES = ['nepal-tours'] as const;
+export const CATEGORY_VALUES = ['nepal-tours', 'trekking', 'kailash'] as const;
 
 export const DESTINATION_VALUES = [
   'Chitwan',
@@ -76,7 +76,7 @@ export const packageInputSchema = z
   .object({
     category: z.enum(CATEGORY_VALUES).default('nepal-tours'),
     title: z.string().min(3, 'Title must be at least 3 characters').max(120, 'Title must be at most 120 characters'),
-    destination: z.enum(DESTINATION_VALUES),
+    destinations: z.array(z.enum(DESTINATION_VALUES)).min(1, 'Select at least one destination'),
     duration: z.enum(DURATION_VALUES),
     bestTimeToVisit: z.array(bestTimeToVisitEntrySchema).default([]),
     description: z.string().min(50, 'Description must be at least 50 characters'),

@@ -1,11 +1,13 @@
-import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Controller, type Control, type FieldErrors, type UseFormRegister } from 'react-hook-form';
 import { DURATION_VALUES } from '../../../constants/duration';
 import { CATEGORY_VALUES, DESTINATION_VALUES, type PackageInput } from '../../../schemas/package.schema';
 import { inputClass, labelClass } from '../../../lib/formStyles';
 import { FieldError } from './FieldError';
+import { MultiSelectDropdown } from './MultiSelectDropdown';
 import { SectionCard } from './SectionCard';
 
 interface BasicDetailsSectionProps {
+  control: Control<PackageInput>;
   register: UseFormRegister<PackageInput>;
   errors: FieldErrors<PackageInput>;
 }
@@ -17,7 +19,13 @@ const DURATION_LABELS: Record<(typeof DURATION_VALUES)[number], string> = {
   '10-12': '10–12 days',
 };
 
-export function BasicDetailsSection({ register, errors }: BasicDetailsSectionProps) {
+const CATEGORY_LABELS: Record<(typeof CATEGORY_VALUES)[number], string> = {
+  'nepal-tours': 'Nepal Tours',
+  trekking: 'Trekking',
+  kailash: 'Kailash',
+};
+
+export function BasicDetailsSection({ control, register, errors }: BasicDetailsSectionProps) {
   return (
     <SectionCard title="Basic details">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -36,7 +44,7 @@ export function BasicDetailsSection({ register, errors }: BasicDetailsSectionPro
           <select id="category" className={inputClass} {...register('category')}>
             {CATEGORY_VALUES.map((value) => (
               <option key={value} value={value}>
-                Nepal Tours
+                {CATEGORY_LABELS[value]}
               </option>
             ))}
           </select>
@@ -44,17 +52,20 @@ export function BasicDetailsSection({ register, errors }: BasicDetailsSectionPro
         </div>
 
         <div>
-          <label htmlFor="destination" className={labelClass}>
-            Destination
-          </label>
-          <select id="destination" className={inputClass} {...register('destination')}>
-            {DESTINATION_VALUES.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-          <FieldError message={errors.destination?.message} />
+          <label className={labelClass}>Destinations</label>
+          <Controller
+            control={control}
+            name="destinations"
+            render={({ field }) => (
+              <MultiSelectDropdown
+                options={DESTINATION_VALUES}
+                value={field.value}
+                onChange={field.onChange}
+                placeholder="Select destinations"
+              />
+            )}
+          />
+          <FieldError message={errors.destinations?.message} />
         </div>
 
         <div>

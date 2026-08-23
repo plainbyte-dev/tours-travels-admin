@@ -163,7 +163,7 @@ export function PackageForm({ draftKey, defaultValues, onSubmit }: PackageFormPr
         </div>
       )}
 
-      <BasicDetailsSection register={register} errors={errors} />
+      <BasicDetailsSection control={control} register={register} errors={errors} />
       <BestTimeToVisitSection control={control} setValue={setValue} errors={errors} />
       <DescriptionSection control={control} register={register} errors={errors} />
       <ItinerarySection

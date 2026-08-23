@@ -10,7 +10,7 @@ export async function createPackage(req: Request, res: Response): Promise<void> 
 
 export async function listPackages(_req: Request, res: Response): Promise<void> {
   const packages = await Package.find()
-    .select('_id title destination duration cost status createdAt')
+    .select('_id title destinations duration cost status createdAt')
     .sort({ createdAt: -1 });
   sendSuccess(res, packages);
 }

@@ -63,7 +63,7 @@ export function PackagesTable() {
         <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
           <tr>
             <th className="px-4 py-3 font-medium">Title</th>
-            <th className="px-4 py-3 font-medium">Destination</th>
+            <th className="px-4 py-3 font-medium">Destinations</th>
             <th className="px-4 py-3 font-medium">Duration</th>
             <th className="px-4 py-3 font-medium">Cost</th>
             <th className="px-4 py-3 font-medium">Status</th>
@@ -74,7 +74,7 @@ export function PackagesTable() {
           {packages.map((pkg) => (
             <tr key={pkg._id}>
               <td className="px-4 py-3 font-medium text-slate-900">{pkg.title}</td>
-              <td className="px-4 py-3 text-slate-600">{pkg.destination}</td>
+              <td className="px-4 py-3 text-slate-600">{pkg.destinations.join(', ')}</td>
               <td className="px-4 py-3 text-slate-600">{pkg.duration} days</td>
               <td className="px-4 py-3 text-slate-600">
                 {pkg.cost.currency} {pkg.cost.from.toLocaleString()} – {pkg.cost.to.toLocaleString()}

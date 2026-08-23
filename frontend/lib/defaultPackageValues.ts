@@ -24,7 +24,7 @@ export function defaultPackageValues(): PackageInput {
   return {
     category: 'nepal-tours',
     title: '',
-    destination: 'Kathmandu',
+    destinations: [],
     duration,
     bestTimeToVisit: [],
     description: '',
