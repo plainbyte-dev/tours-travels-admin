@@ -1,0 +1,121 @@
+import { z } from 'zod';
+import { DURATION_DAY_RANGE, DURATION_VALUES } from '../constants/duration';
+
+export const CATEGORY_VALUES = ['nepal-tours'] as const;
+
+export const DESTINATION_VALUES = [
+  'Chitwan',
+  'Pokhara',
+  'Lumbini',
+  'Janakpur',
+  'Kathmandu',
+  'Ilam',
+] as const;
+
+export const MONTH_VALUES = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+] as const;
+
+export const RATING_VALUES = ['best', 'normal', 'average'] as const;
+
+export const CURRENCY_VALUES = ['NPR', 'USD'] as const;
+
+export const STATUS_VALUES = ['draft', 'published'] as const;
+
+const bestTimeToVisitEntrySchema = z.object({
+  month: z.enum(MONTH_VALUES),
+  rating: z.enum(RATING_VALUES),
+});
+
+const mealsSchema = z.object({
+  breakfast: z.boolean().default(false),
+  lunch: z.boolean().default(false),
+  dinner: z.boolean().default(false),
+});
+
+const itineraryDaySchema = z.object({
+  day: z.number().int().positive(),
+  title: z.string().min(1, 'Activity title is required'),
+  description: z.string().min(20, 'Description must be at least 20 characters'),
+  images: z.array(z.string()).default([]),
+  keyActivities: z.array(z.string().min(1)).min(1, 'Add at least one key activity'),
+  accommodation: z.string().default(''),
+  transportation: z.string().default(''),
+  meals: mealsSchema.default({ breakfast: false, lunch: false, dinner: false }),
+});
+
+const costSchema = z
+  .object({
+    from: z.number().positive('"From" must be greater than 0'),
+    to: z.number().positive('"To" must be greater than 0'),
+    currency: z.enum(CURRENCY_VALUES).default('NPR'),
+    unit: z.literal('per_person').default('per_person'),
+  })
+  .superRefine((cost, ctx) => {
+    if (cost.to < cost.from) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: '"To" must be greater than or equal to "From"',
+        path: ['to'],
+      });
+    }
+  });
+
+export const packageInputSchema = z
+  .object({
+    category: z.enum(CATEGORY_VALUES).default('nepal-tours'),
+    title: z.string().min(3, 'Title must be at least 3 characters').max(120, 'Title must be at most 120 characters'),
+    destination: z.enum(DESTINATION_VALUES),
+    duration: z.enum(DURATION_VALUES),
+    bestTimeToVisit: z.array(bestTimeToVisitEntrySchema).default([]),
+    description: z.string().min(50, 'Description must be at least 50 characters'),
+    itinerary: z.array(itineraryDaySchema).default([]),
+    cost: costSchema,
+    status: z.enum(STATUS_VALUES).default('draft'),
+  })
+  .superRefine((data, ctx) => {
+    const months = data.bestTimeToVisit.map((entry) => entry.month);
+    const duplicateMonth = months.find((month, index) => months.indexOf(month) !== index);
+    if (duplicateMonth) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `${duplicateMonth} is selected more than once`,
+        path: ['bestTimeToVisit'],
+      });
+    }
+
+    const { min, max } = DURATION_DAY_RANGE[data.duration];
+    if (data.itinerary.length < min || data.itinerary.length > max) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `A ${data.duration} day package needs between ${min} and ${max} itinerary days (got ${data.itinerary.length})`,
+        path: ['itinerary'],
+      });
+    }
+
+    data.itinerary.forEach((entry, index) => {
+      if (entry.day !== index + 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Day numbers must be sequential starting at 1 (expected ${index + 1}, got ${entry.day})`,
+          path: ['itinerary', index, 'day'],
+        });
+      }
+    });
+  });
+
+export type PackageInput = z.infer<typeof packageInputSchema>;
+export type ItineraryDayInput = z.infer<typeof itineraryDaySchema>;
+export type BestTimeToVisitEntry = z.infer<typeof bestTimeToVisitEntrySchema>;
+export type CostInput = z.infer<typeof costSchema>;
