@@ -35,11 +35,18 @@ npm run dev              # starts the API on http://localhost:4000
 ```bash
 cd frontend
 npm install
-cp .env.example .env.local   # adjust NEXT_PUBLIC_API_URL if the API isn't on :4000
+cp .env.example .env.local
 npm run dev                    # starts the admin UI on http://localhost:3000
 ```
 
+`.env.example` defaults `NEXT_PUBLIC_API_URL` to the deployed backend. For local development against your local API instead, edit `.env.local` and set it to `http://localhost:4000`.
+
 Visit `http://localhost:3000` — it redirects to `/admin/packages`.
+
+## Deployment
+
+- **Frontend:** [tours-travels-admin.vercel.app](https://tours-travels-admin.vercel.app) (Vercel). Set `NEXT_PUBLIC_API_URL` in the Vercel project's environment variables to the backend URL below, then redeploy — `NEXT_PUBLIC_*` vars are inlined at build time, so changing them requires a fresh build.
+- **Backend:** [tours-travels-admin.onrender.com](https://tours-travels-admin.onrender.com) (Render). Root directory `backend`, build command `npm install && npm run build`, start command `npm start`. Requires `MONGODB_URI` (Atlas), `CLIENT_ORIGIN` (comma-separated list including the Vercel URL) set in Render's environment variables.
 
 ## Project structure
 
