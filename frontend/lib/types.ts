@@ -6,4 +6,7 @@ export interface PackageRecord extends PackageInput {
   updatedAt: string;
 }
 
-export type PackageListItem = Pick<PackageRecord, '_id' | 'title' | 'destinations' | 'duration' | 'cost' | 'status' | 'createdAt'>;
+export type PackageListItem = Pick<
+  PackageRecord,
+  '_id' | 'title' | 'coverImage' | 'destinations' | 'duration' | 'cost' | 'status' | 'createdAt'
+>;

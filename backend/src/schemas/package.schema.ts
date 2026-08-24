@@ -76,6 +76,7 @@ export const packageInputSchema = z
   .object({
     category: z.enum(CATEGORY_VALUES).default('nepal-tours'),
     title: z.string().min(3, 'Title must be at least 3 characters').max(120, 'Title must be at most 120 characters'),
+    coverImage: z.string().min(1, 'Cover image is required'),
     destinations: z.array(z.enum(DESTINATION_VALUES)).min(1, 'Select at least one destination'),
     duration: z.enum(DURATION_VALUES),
     bestTimeToVisit: z.array(bestTimeToVisitEntrySchema).default([]),

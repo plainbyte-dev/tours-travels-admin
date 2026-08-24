@@ -1,14 +1,15 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import { API_BASE_URL, uploadImages } from '../../../lib/api';
+import { resolveImageUrl, uploadImages } from '../../../lib/api';
 
 interface ImageUploaderProps {
   value: string[];
   onChange: (urls: string[]) => void;
+  max?: number;
 }
 
-export function ImageUploader({ value, onChange }: ImageUploaderProps) {
+export function ImageUploader({ value, onChange, max }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
@@ -22,14 +23,15 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
       setProgress(0);
       try {
         const urls = await uploadImages(files, setProgress);
-        onChange([...value, ...urls]);
+        const combined = [...value, ...urls];
+        onChange(max ? combined.slice(-max) : combined);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Upload failed');
       } finally {
         setProgress(null);
       }
     },
-    [onChange, value],
+    [max, onChange, value],
   );
 
   return (
@@ -56,7 +58,7 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
           ref={inputRef}
           type="file"
           accept="image/jpeg,image/png,image/webp"
-          multiple
+          multiple={max !== 1}
           hidden
           onChange={(event) => void handleFiles(event.target.files)}
         />
@@ -75,7 +77,7 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
           {value.map((url, index) => (
             <div key={url} className="group relative h-16 w-16 overflow-hidden rounded-md border border-slate-200">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`${API_BASE_URL}${url}`} alt="" className="h-full w-full object-cover" />
+              <img src={resolveImageUrl(url)} alt="" className="h-full w-full object-cover" />
               <button
                 type="button"
                 onClick={() => onChange(value.filter((_, i) => i !== index))}

@@ -3,6 +3,7 @@ import { DURATION_VALUES } from '../../../constants/duration';
 import { CATEGORY_VALUES, DESTINATION_VALUES, type PackageInput } from '../../../schemas/package.schema';
 import { inputClass, labelClass } from '../../../lib/formStyles';
 import { FieldError } from './FieldError';
+import { ImageUploader } from './ImageUploader';
 import { MultiSelectDropdown } from './MultiSelectDropdown';
 import { SectionCard } from './SectionCard';
 
@@ -35,6 +36,22 @@ export function BasicDetailsSection({ control, register, errors }: BasicDetailsS
           </label>
           <input id="title" className={inputClass} {...register('title')} />
           <FieldError message={errors.title?.message} />
+        </div>
+
+        <div className="sm:col-span-2">
+          <label className={labelClass}>Cover image</label>
+          <Controller
+            control={control}
+            name="coverImage"
+            render={({ field }) => (
+              <ImageUploader
+                value={field.value ? [field.value] : []}
+                onChange={(urls) => field.onChange(urls[0] ?? '')}
+                max={1}
+              />
+            )}
+          />
+          <FieldError message={errors.coverImage?.message} />
         </div>
 
         <div>

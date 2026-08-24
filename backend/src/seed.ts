@@ -11,6 +11,7 @@ const allMeals = { breakfast: true, lunch: true, dinner: true };
 const pokharaPackage: PackageInput = {
   category: 'nepal-tours',
   title: 'Pokhara Lakeside & Sarangkot Sunrise',
+  coverImage: 'https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg?auto=compress&cs=tinysrgb&w=1200',
   destinations: ['Pokhara'],
   duration: '5-7',
   bestTimeToVisit: [
@@ -91,6 +92,7 @@ const pokharaPackage: PackageInput = {
 const chitwanPackage: PackageInput = {
   category: 'nepal-tours',
   title: 'Chitwan Jungle Safari Escape',
+  coverImage: 'https://images.pexels.com/photos/247376/pexels-photo-247376.jpeg?auto=compress&cs=tinysrgb&w=1200',
   destinations: ['Chitwan'],
   duration: '3-4',
   bestTimeToVisit: [
@@ -139,6 +141,7 @@ const chitwanPackage: PackageInput = {
 const kathmanduLumbiniPackage: PackageInput = {
   category: 'nepal-tours',
   title: 'Kathmandu Heritage & Lumbini Pilgrimage',
+  coverImage: 'https://images.pexels.com/photos/1141853/pexels-photo-1141853.jpeg?auto=compress&cs=tinysrgb&w=1200',
   destinations: ['Kathmandu', 'Lumbini'],
   duration: '8-10',
   bestTimeToVisit: [

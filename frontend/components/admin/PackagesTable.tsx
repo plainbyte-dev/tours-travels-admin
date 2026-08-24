@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { api, ApiRequestError } from '../../lib/api';
+import { api, ApiRequestError, resolveImageUrl } from '../../lib/api';
 import type { PackageListItem } from '../../lib/types';
 import { useToast } from './Toast';
 
@@ -62,6 +62,7 @@ export function PackagesTable() {
       <table className="w-full min-w-[720px] text-left text-sm">
         <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
           <tr>
+            <th className="px-4 py-3 font-medium">Image</th>
             <th className="px-4 py-3 font-medium">Title</th>
             <th className="px-4 py-3 font-medium">Destinations</th>
             <th className="px-4 py-3 font-medium">Duration</th>
@@ -73,6 +74,18 @@ export function PackagesTable() {
         <tbody className="divide-y divide-slate-100">
           {packages.map((pkg) => (
             <tr key={pkg._id}>
+              <td className="px-4 py-3">
+                {pkg.coverImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={resolveImageUrl(pkg.coverImage)}
+                    alt=""
+                    className="h-12 w-16 rounded-md object-cover"
+                  />
+                ) : (
+                  <div className="h-12 w-16 rounded-md bg-slate-100" />
+                )}
+              </td>
               <td className="px-4 py-3 font-medium text-slate-900">{pkg.title}</td>
               <td className="px-4 py-3 text-slate-600">{pkg.destinations.join(', ')}</td>
               <td className="px-4 py-3 text-slate-600">{pkg.duration} days</td>

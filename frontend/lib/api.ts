@@ -91,4 +91,8 @@ export function uploadImages(files: File[], onProgress?: (percent: number) => vo
   });
 }
 
+export function resolveImageUrl(url: string): string {
+  return /^https?:\/\//.test(url) ? url : `${API_BASE_URL}${url}`;
+}
+
 export { API_BASE_URL };
