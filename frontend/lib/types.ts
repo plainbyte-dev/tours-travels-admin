@@ -8,5 +8,5 @@ export interface PackageRecord extends PackageInput {
 
 export type PackageListItem = Pick<
   PackageRecord,
-  '_id' | 'title' | 'coverImage' | 'destinations' | 'duration' | 'cost' | 'status' | 'createdAt'
+  '_id' | 'title' | 'coverImage' | 'destinations' | 'duration' | 'itinerary' | 'cost' | 'status' | 'createdAt'
 >;
