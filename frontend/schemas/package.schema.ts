@@ -10,6 +10,8 @@ export const DESTINATION_VALUES = [
   'Janakpur',
   'Kathmandu',
   'Ilam',
+  'Muktinath',
+  'Nagarkot',
 ] as const;
 
 export const MONTH_VALUES = [

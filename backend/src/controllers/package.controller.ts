@@ -15,8 +15,23 @@ export async function listPackages(_req: Request, res: Response): Promise<void> 
   sendSuccess(res, packages);
 }
 
+export async function listPublishedPackages(_req: Request, res: Response): Promise<void> {
+  const packages = await Package.find({ status: 'published' })
+    .select('_id title coverImage destinations duration itinerary cost status createdAt')
+    .sort({ createdAt: -1 });
+  sendSuccess(res, packages);
+}
+
 export async function getPackageById(req: Request, res: Response): Promise<void> {
   const pkg = await Package.findById(req.params.id);
+  if (!pkg) {
+    throw new ApiError(404, 'Package not found');
+  }
+  sendSuccess(res, pkg);
+}
+
+export async function getPublishedPackageById(req: Request, res: Response): Promise<void> {
+  const pkg = await Package.findOne({ _id: req.params.id, status: 'published' });
   if (!pkg) {
     throw new ApiError(404, 'Package not found');
   }

@@ -5,6 +5,7 @@ import express, { type NextFunction, type Request, type Response } from 'express
 import { connectDB } from './config/db';
 import { errorHandler } from './middleware/errorHandler';
 import packageRoutes from './routes/package.routes';
+import publicRoutes from './routes/public.routes';
 import uploadRoutes from './routes/upload.routes';
 import { ApiError } from './utils/ApiError';
 
@@ -26,6 +27,7 @@ app.get('/', (_req: Request, res: Response) => {
 
 app.use('/api/admin/packages', packageRoutes);
 app.use('/api/admin', uploadRoutes);
+app.use('/api', publicRoutes);
 
 app.use((_req: Request, _res: Response, next: NextFunction) => {
   next(new ApiError(404, 'Route not found'));
