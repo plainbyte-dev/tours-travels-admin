@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { DIFFICULTY_VALUES } from '../constants/difficulty';
 import { DURATION_DAY_RANGE, DURATION_VALUES } from '../constants/duration';
 
 export const CATEGORY_VALUES = ['nepal-tours', 'trekking', 'kailash'] as const;
@@ -34,6 +35,37 @@ export const RATING_VALUES = ['best', 'normal', 'average'] as const;
 export const CURRENCY_VALUES = ['NPR', 'USD'] as const;
 
 export const STATUS_VALUES = ['draft', 'published'] as const;
+
+const guideSchema = z.object({
+  name: z.string().min(1),
+  photo: z.string().min(1),
+  bio: z.string().min(1),
+});
+
+const optionalGuideSchema = z.preprocess((val) => {
+  if (val && typeof val === 'object') {
+    const g = val as Record<string, unknown>;
+    if (!g.name && !g.photo && !g.bio) return undefined;
+  }
+  return val;
+}, guideSchema.optional());
+
+const optionalDifficultySchema = z.preprocess(
+  (val) => (val === '' ? undefined : val),
+  z.enum(DIFFICULTY_VALUES).optional(),
+);
+
+const testimonialSchema = z.object({
+  name: z.string().min(1),
+  rating: z.number().int().min(1).max(5),
+  quote: z.string().min(1),
+  photo: z.string().default(''),
+});
+
+const faqSchema = z.object({
+  question: z.string().min(1),
+  answer: z.string().min(1),
+});
 
 const bestTimeToVisitEntrySchema = z.object({
   month: z.enum(MONTH_VALUES),
@@ -86,6 +118,16 @@ export const packageInputSchema = z
     itinerary: z.array(itineraryDaySchema).default([]),
     cost: costSchema,
     status: z.enum(STATUS_VALUES).default('draft'),
+    highlights: z.array(z.string().min(1)).default([]),
+    difficulty: optionalDifficultySchema,
+    groupSize: z.string().default(''),
+    maxAltitude: z.string().default(''),
+    costIncludes: z.array(z.string().min(1)).default([]),
+    costExcludes: z.array(z.string().min(1)).default([]),
+    heroVideo: z.string().default(''),
+    guide: optionalGuideSchema,
+    testimonials: z.array(testimonialSchema).default([]),
+    faqs: z.array(faqSchema).default([]),
   })
   .superRefine((data, ctx) => {
     const months = data.bestTimeToVisit.map((entry) => entry.month);
@@ -122,3 +164,6 @@ export type PackageInput = z.infer<typeof packageInputSchema>;
 export type ItineraryDayInput = z.infer<typeof itineraryDaySchema>;
 export type BestTimeToVisitEntry = z.infer<typeof bestTimeToVisitEntrySchema>;
 export type CostInput = z.infer<typeof costSchema>;
+export type GuideInput = z.infer<typeof guideSchema>;
+export type TestimonialInput = z.infer<typeof testimonialSchema>;
+export type FaqInput = z.infer<typeof faqSchema>;

@@ -87,6 +87,45 @@ const pokharaPackage: PackageInput = {
   ],
   cost: { from: 25000, to: 40000, currency: 'NPR', unit: 'per_person' },
   status: 'published',
+  highlights: [
+    'Sunrise over the Annapurna range from Sarangkot',
+    'Boat ride on Phewa Lake to the World Peace Pagoda',
+    'Explore Davis Falls and Gupteshwor Cave',
+  ],
+  difficulty: 'Easy',
+  groupSize: '2–12 travellers',
+  maxAltitude: '1,600 m (Sarangkot)',
+  costIncludes: [
+    'Hotel accommodation (5 nights, lakeside)',
+    'Daily breakfast',
+    'Private transfers and sightseeing by car/jeep',
+    'English-speaking guide',
+  ],
+  costExcludes: ['International/domestic airfare', 'Nepal visa fees', 'Lunches and dinners not listed', 'Personal expenses and tips'],
+  guide: {
+    name: 'Bikash Gurung',
+    photo: 'https://res.cloudinary.com/productionappfreelance/image/upload/tours-travels/guides/bikash-gurung.jpg',
+    bio: 'Pokhara-based trekking guide with 12 years of experience leading Annapurna region tours.',
+  },
+  testimonials: [
+    {
+      name: 'Emma Clarke',
+      rating: 5,
+      quote: 'The Sarangkot sunrise alone was worth the trip. Bikash was knowledgeable and easygoing.',
+      photo: '',
+    },
+  ],
+  faqs: [
+    {
+      question: 'Is this trip suitable for travellers with limited fitness?',
+      answer: 'Yes, the Sarangkot hike is a gentle downhill walk and the rest of the itinerary is leisure-paced.',
+    },
+    {
+      question: 'What is the best time of year for clear mountain views?',
+      answer: 'October and November offer the clearest skies; March and April are good alternatives.',
+    },
+  ],
+  heroVideo: '',
 };
 
 const chitwanPackage: PackageInput = {
@@ -136,6 +175,45 @@ const chitwanPackage: PackageInput = {
   ],
   cost: { from: 12000, to: 18000, currency: 'NPR', unit: 'per_person' },
   status: 'published',
+  highlights: [
+    'Jeep safari inside Chitwan National Park',
+    'Canoe ride along the Rapti River',
+    'Evening Tharu cultural stick dance show',
+  ],
+  difficulty: 'Easy',
+  groupSize: '2–14 travellers',
+  maxAltitude: '150 m (Chitwan lowlands)',
+  costIncludes: [
+    'Jungle resort accommodation (2 nights)',
+    'All meals during the safari',
+    'Canoe ride and jeep safari fees',
+    'Tharu village walk and cultural show',
+  ],
+  costExcludes: ['International/domestic airfare', 'Nepal visa fees', 'Alcoholic beverages', 'Personal expenses and tips'],
+  guide: {
+    name: 'Rajan Chaudhary',
+    photo: 'https://res.cloudinary.com/productionappfreelance/image/upload/tours-travels/guides/rajan-chaudhary.jpg',
+    bio: 'Local Tharu naturalist guide from Sauraha with a decade of wildlife-tracking experience in Chitwan National Park.',
+  },
+  testimonials: [
+    {
+      name: 'Daniel Fischer',
+      rating: 5,
+      quote: 'We spotted a one-horned rhino on the very first safari. Rajan knew exactly where to look.',
+      photo: '',
+    },
+  ],
+  faqs: [
+    {
+      question: 'What wildlife can we realistically expect to see?',
+      answer: 'One-horned rhinos are commonly sighted; Bengal tigers and gharial crocodiles are possible but not guaranteed.',
+    },
+    {
+      question: 'Is the jungle safari safe for children?',
+      answer: 'Yes, jeep safaris are family-friendly; canoe rides are recommended for children over 6.',
+    },
+  ],
+  heroVideo: '',
 };
 
 const kathmanduLumbiniPackage: PackageInput = {
@@ -236,6 +314,45 @@ const kathmanduLumbiniPackage: PackageInput = {
   ],
   cost: { from: 550, to: 800, currency: 'USD', unit: 'per_person' },
   status: 'published',
+  highlights: [
+    'Guided tours of Kathmandu\'s four UNESCO Durbar Squares',
+    'Sunset visit to Boudhanath Stupa',
+    'Pilgrimage to the Maya Devi Temple in Lumbini, birthplace of Buddha',
+  ],
+  difficulty: 'Easy',
+  groupSize: '2–16 travellers',
+  maxAltitude: '1,400 m (Kathmandu Valley)',
+  costIncludes: [
+    'Hotel and pilgrim lodge accommodation (7 nights)',
+    'Daily breakfast',
+    'Domestic flights (Kathmandu–Bhairahawa–Kathmandu)',
+    'Private car with guide for all sightseeing',
+  ],
+  costExcludes: ['International airfare', 'Nepal visa fees', 'Lunches and dinners not listed', 'Monastery donations and personal expenses'],
+  guide: {
+    name: 'Sunita Shrestha',
+    photo: 'https://res.cloudinary.com/productionappfreelance/image/upload/tours-travels/guides/sunita-shrestha.jpg',
+    bio: 'Kathmandu-based heritage and pilgrimage guide specializing in Newari architecture and Buddhist history.',
+  },
+  testimonials: [
+    {
+      name: 'Marco Rossi',
+      rating: 5,
+      quote: 'Sunita brought the Durbar Squares to life with stories you would never find in a guidebook. Lumbini was deeply moving.',
+      photo: '',
+    },
+  ],
+  faqs: [
+    {
+      question: 'How much walking is involved in the heritage sites?',
+      answer: 'Expect 2–4 hours of walking on uneven cobblestone squares each day; comfortable walking shoes are recommended.',
+    },
+    {
+      question: 'Is the domestic flight to Lumbini reliable?',
+      answer: 'Flights to Bhairahawa run daily and are generally reliable, though morning fog can occasionally cause delays in winter.',
+    },
+  ],
+  heroVideo: '',
 };
 
 const samplePackages = [pokharaPackage, chitwanPackage, kathmanduLumbiniPackage];

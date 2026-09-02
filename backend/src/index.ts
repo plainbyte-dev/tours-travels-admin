@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import path from 'path';
 import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { connectDB } from './config/db';
@@ -12,14 +11,13 @@ import { ApiError } from './utils/ApiError';
 const app = express();
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/tours-travels';
-const CLIENT_ORIGINS = (process.env.CLIENT_ORIGIN || 'http://localhost:3000')
+const CLIENT_ORIGINS = (process.env.CLIENT_ORIGIN || 'http://localhost:3001')
   .split(',')
   .map((origin) => origin.trim())
   .filter(Boolean);
 
 app.use(cors({ origin: CLIENT_ORIGINS }));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.get('/', (_req: Request, res: Response) => {
   res.json({ message: 'Express + TypeScript server is running!' });

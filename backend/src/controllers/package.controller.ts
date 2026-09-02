@@ -9,16 +9,12 @@ export async function createPackage(req: Request, res: Response): Promise<void> 
 }
 
 export async function listPackages(_req: Request, res: Response): Promise<void> {
-  const packages = await Package.find()
-    .select('_id title coverImage destinations duration itinerary cost status createdAt')
-    .sort({ createdAt: -1 });
+  const packages = await Package.find().sort({ createdAt: -1 });
   sendSuccess(res, packages);
 }
 
 export async function listPublishedPackages(_req: Request, res: Response): Promise<void> {
-  const packages = await Package.find({ status: 'published' })
-    .select('_id title coverImage destinations duration itinerary cost status createdAt')
-    .sort({ createdAt: -1 });
+  const packages = await Package.find({ status: 'published' }).sort({ createdAt: -1 });
   sendSuccess(res, packages);
 }
 

@@ -1,4 +1,5 @@
 import { Schema, model, type InferSchemaType } from 'mongoose';
+import { DIFFICULTY_VALUES } from '../constants/difficulty';
 import { DURATION_VALUES } from '../constants/duration';
 import {
   CATEGORY_VALUES,
@@ -50,6 +51,33 @@ const costSchema = new Schema(
   { _id: false },
 );
 
+const guideSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    photo: { type: String, required: true },
+    bio: { type: String, required: true },
+  },
+  { _id: false },
+);
+
+const testimonialSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    rating: { type: Number, min: 1, max: 5, required: true },
+    quote: { type: String, required: true },
+    photo: { type: String, default: '' },
+  },
+  { _id: false },
+);
+
+const faqSchema = new Schema(
+  {
+    question: { type: String, required: true },
+    answer: { type: String, required: true },
+  },
+  { _id: false },
+);
+
 const packageSchema = new Schema(
   {
     category: { type: String, enum: CATEGORY_VALUES, default: 'nepal-tours' },
@@ -62,6 +90,16 @@ const packageSchema = new Schema(
     itinerary: { type: [itineraryDaySchema], default: [] },
     cost: { type: costSchema, required: true },
     status: { type: String, enum: STATUS_VALUES, default: 'draft' },
+    highlights: { type: [String], default: [] },
+    difficulty: { type: String, enum: DIFFICULTY_VALUES },
+    groupSize: { type: String, default: '' },
+    maxAltitude: { type: String, default: '' },
+    costIncludes: { type: [String], default: [] },
+    costExcludes: { type: [String], default: [] },
+    heroVideo: { type: String, default: '' },
+    guide: { type: guideSchema },
+    testimonials: { type: [testimonialSchema], default: [] },
+    faqs: { type: [faqSchema], default: [] },
   },
   { timestamps: true },
 );
