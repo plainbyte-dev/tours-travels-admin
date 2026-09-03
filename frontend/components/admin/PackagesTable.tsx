@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { api, ApiRequestError, resolveImageUrl } from '../../lib/api';
+import { api, ApiRequestError, isOptimizableImageUrl, resolveImageUrl } from '../../lib/api';
 import type { PackageListItem } from '../../lib/types';
 import { useToast } from './Toast';
 
@@ -76,12 +77,14 @@ export function PackagesTable() {
             <tr key={pkg._id}>
               <td className="px-4 py-3">
                 {pkg.coverImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={resolveImageUrl(pkg.coverImage)}
-                    alt=""
-                    className="h-12 w-16 rounded-md object-cover"
-                  />
+                  <div className="relative h-12 w-16 overflow-hidden rounded-md">
+                    {isOptimizableImageUrl(pkg.coverImage) ? (
+                      <Image src={resolveImageUrl(pkg.coverImage)} alt="" fill sizes="64px" className="object-cover" />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element -- legacy non-Cloudinary URL, not covered by images.remotePatterns
+                      <img src={resolveImageUrl(pkg.coverImage)} alt="" className="h-full w-full object-cover" />
+                    )}
+                  </div>
                 ) : (
                   <div className="h-12 w-16 rounded-md bg-slate-100" />
                 )}

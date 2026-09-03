@@ -15,8 +15,12 @@ import { BasicDetailsSection } from './form/BasicDetailsSection';
 import { BestTimeToVisitSection } from './form/BestTimeToVisitSection';
 import { CostSection } from './form/CostSection';
 import { DescriptionSection } from './form/DescriptionSection';
+import { FaqsSection } from './form/FaqsSection';
 import { FormFooterActions } from './form/FormFooterActions';
+import { GuideSection } from './form/GuideSection';
 import { ItinerarySection } from './form/ItinerarySection';
+import { TestimonialsSection } from './form/TestimonialsSection';
+import { TripDetailsSection } from './form/TripDetailsSection';
 
 interface PackageFormProps {
   draftKey: string;
@@ -164,6 +168,7 @@ export function PackageForm({ draftKey, defaultValues, onSubmit }: PackageFormPr
       )}
 
       <BasicDetailsSection control={control} register={register} errors={errors} />
+      <TripDetailsSection control={control} register={register} errors={errors} />
       <BestTimeToVisitSection control={control} setValue={setValue} errors={errors} />
       <DescriptionSection control={control} register={register} errors={errors} />
       <ItinerarySection
@@ -177,6 +182,9 @@ export function PackageForm({ draftKey, defaultValues, onSubmit }: PackageFormPr
         errorDayIndices={errorDayIndices}
       />
       <CostSection control={control} register={register} errors={errors} />
+      <GuideSection control={control} register={register} errors={errors} />
+      <TestimonialsSection control={control} register={register} errors={errors} />
+      <FaqsSection control={control} register={register} errors={errors} />
 
       <FormFooterActions
         isSubmitting={submittingStatus !== null}

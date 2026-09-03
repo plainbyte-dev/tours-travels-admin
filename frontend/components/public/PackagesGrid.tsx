@@ -1,7 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { api, ApiRequestError, resolveImageUrl } from '../../lib/api';
+import { api, ApiRequestError, isOptimizableImageUrl, resolveImageUrl } from '../../lib/api';
 import type { PackageListItem } from '../../lib/types';
 
 export function PackagesGrid() {
@@ -47,8 +48,24 @@ export function PackagesGrid() {
           className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
         >
           {pkg.coverImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={resolveImageUrl(pkg.coverImage)} alt={pkg.title} className="h-48 w-full object-cover" />
+            <div className="relative h-48 w-full">
+              {isOptimizableImageUrl(pkg.coverImage) ? (
+                <Image
+                  src={resolveImageUrl(pkg.coverImage)}
+                  alt={pkg.title}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element -- legacy non-Cloudinary URL, not covered by images.remotePatterns
+                <img
+                  src={resolveImageUrl(pkg.coverImage)}
+                  alt={pkg.title}
+                  className="h-full w-full object-cover"
+                />
+              )}
+            </div>
           ) : (
             <div className="h-48 w-full bg-slate-100" />
           )}

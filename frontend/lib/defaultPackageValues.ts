@@ -32,5 +32,15 @@ export function defaultPackageValues(): PackageInput {
     itinerary: itineraryForDuration(duration),
     cost: { from: 0, to: 0, currency: 'NPR', unit: 'per_person' },
     status: 'draft',
+    highlights: [],
+    difficulty: undefined,
+    groupSize: '',
+    maxAltitude: '',
+    costIncludes: [],
+    costExcludes: [],
+    heroVideo: '',
+    guide: undefined,
+    testimonials: [],
+    faqs: [],
   };
 }

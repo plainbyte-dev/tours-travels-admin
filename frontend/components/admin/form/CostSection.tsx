@@ -1,11 +1,12 @@
 'use client';
 
-import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Controller, type Control, type FieldErrors, type UseFormRegister } from 'react-hook-form';
 import { useWatch } from 'react-hook-form';
 import { CURRENCY_VALUES, type PackageInput } from '../../../schemas/package.schema';
 import { inputClass, labelClass } from '../../../lib/formStyles';
 import { FieldError } from './FieldError';
 import { SectionCard } from './SectionCard';
+import { TagInput } from './TagInput';
 
 interface CostSectionProps {
   control: Control<PackageInput>;
@@ -51,6 +52,31 @@ export function CostSection({ control, register, errors }: CostSectionProps) {
           {Number.isFinite(cost.to) ? cost.to.toLocaleString() : 0} per person
         </p>
       )}
+
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label className={labelClass}>What&apos;s included</label>
+          <Controller
+            control={control}
+            name="costIncludes"
+            render={({ field }) => (
+              <TagInput value={field.value} onChange={field.onChange} placeholder="Type and press Enter" />
+            )}
+          />
+          <FieldError message={errors.costIncludes?.message} />
+        </div>
+        <div>
+          <label className={labelClass}>What&apos;s excluded</label>
+          <Controller
+            control={control}
+            name="costExcludes"
+            render={({ field }) => (
+              <TagInput value={field.value} onChange={field.onChange} placeholder="Type and press Enter" />
+            )}
+          />
+          <FieldError message={errors.costExcludes?.message} />
+        </div>
+      </div>
     </SectionCard>
   );
 }

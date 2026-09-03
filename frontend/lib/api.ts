@@ -95,4 +95,16 @@ export function resolveImageUrl(url: string): string {
   return /^https?:\/\//.test(url) ? url : `${API_BASE_URL}${url}`;
 }
 
+// next/image throws at render time for any host not listed in next.config.ts's
+// images.remotePatterns. Cloudinary is the only host configured there, so legacy
+// image references (e.g. old local /uploads paths from before the Cloudinary
+// migration) need to fall back to a plain <img> instead of crashing the page.
+export function isOptimizableImageUrl(url: string): boolean {
+  try {
+    return new URL(resolveImageUrl(url)).hostname === 'res.cloudinary.com';
+  } catch {
+    return false;
+  }
+}
+
 export { API_BASE_URL };

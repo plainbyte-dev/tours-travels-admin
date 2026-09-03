@@ -1,7 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import { useCallback, useRef, useState } from 'react';
-import { resolveImageUrl, uploadImages } from '../../../lib/api';
+import { isOptimizableImageUrl, resolveImageUrl, uploadImages } from '../../../lib/api';
 
 interface ImageUploaderProps {
   value: string[];
@@ -76,8 +77,12 @@ export function ImageUploader({ value, onChange, max }: ImageUploaderProps) {
         <div className="mt-3 flex flex-wrap gap-2">
           {value.map((url, index) => (
             <div key={url} className="group relative h-16 w-16 overflow-hidden rounded-md border border-slate-200">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={resolveImageUrl(url)} alt="" className="h-full w-full object-cover" />
+              {isOptimizableImageUrl(url) ? (
+                <Image src={resolveImageUrl(url)} alt="" fill sizes="64px" className="object-cover" />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element -- legacy non-Cloudinary URL, not covered by images.remotePatterns
+                <img src={resolveImageUrl(url)} alt="" className="h-full w-full object-cover" />
+              )}
               <button
                 type="button"
                 onClick={() => onChange(value.filter((_, i) => i !== index))}
